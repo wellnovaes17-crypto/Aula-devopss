@@ -18,7 +18,7 @@ jobs:
 
       - name: Gerar artefato do site
         run: |
-          echo "Diretório atual (runner):"
+          echo "Diretório atual no runner:"
           pwd
           echo "Arquivos na raiz do repositório:"
           ls -l
@@ -27,7 +27,6 @@ jobs:
           cp style.css build/
           echo "Arquivos na pasta build:"
           ls -l build/
-
 
       - name: Publicar artefatos
         uses: actions/upload-artifact@v4
@@ -51,3 +50,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
           publish_branch: gh-pages
+
