@@ -18,15 +18,16 @@ jobs:
 
       - name: Gerar artefato do site
         run: |
-          echo "Diretório atual:"
+          echo "Diretório atual (runner):"
           pwd
-          echo "Arquivos na raiz:"
+          echo "Arquivos na raiz do repositório:"
           ls -l
           mkdir -p build
           cp index.html build/
           cp style.css build/
           echo "Arquivos na pasta build:"
           ls -l build/
+
 
       - name: Publicar artefatos
         uses: actions/upload-artifact@v4
