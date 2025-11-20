@@ -23,7 +23,7 @@ jobs:
           cp style.css build/
 
       - name: Publicar artefatos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: site-build
           path: build/
@@ -34,12 +34,12 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Baixar artefato
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: site-build
 
       - name: Deploy para GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
