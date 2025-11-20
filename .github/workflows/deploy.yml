@@ -1,0 +1,45 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Validação simples do HTML
+        run: echo "Rodando validação (simulação)"
+
+      - name: Gerar artefato do site
+        run: |
+          mkdir build
+          cp index.html build/
+          cp style.css build/
+
+      - name: Publicar artefatos
+        uses: actions/upload-artifact@v3
+        with:
+          name: site-build
+          path: build/
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Baixar artefato
+        uses: actions/download-artifact@v3
+        with:
+          name: site-build
+
+      - name: Deploy para GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
