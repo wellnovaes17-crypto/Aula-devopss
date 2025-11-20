@@ -16,7 +16,7 @@ jobs:
       - name: Validação simples do HTML
         run: echo "Rodando validação (simulação)"
 
-      - nname: Gerar artefato do site
+      - name: Gerar artefato do site
         run: |
           mkdir -p build
           cp index.html build/
