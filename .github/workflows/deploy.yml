@@ -16,11 +16,13 @@ jobs:
       - name: Validação simples do HTML
         run: echo "Rodando validação (simulação)"
 
-      - name: Gerar artefato do site
+      - nname: Gerar artefato do site
         run: |
-          mkdir build
+          mkdir -p build
           cp index.html build/
           cp style.css build/
+          echo "Arquivos na pasta build:"
+          ls -l build/
 
       - name: Publicar artefatos
         uses: actions/upload-artifact@v4
@@ -42,4 +44,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: build
