@@ -18,6 +18,10 @@ jobs:
 
       - name: Gerar artefato do site
         run: |
+          echo "Diretório atual:"
+          pwd
+          echo "Arquivos na raiz:"
+          ls -l
           mkdir -p build
           cp index.html build/
           cp style.css build/
@@ -45,3 +49,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
+          publish_branch: gh-pages
