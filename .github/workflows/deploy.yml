@@ -19,17 +19,12 @@ jobs:
 
       - name: Gerar artefato do site
         run: |
-          echo "Diretório atual (runner):"
-          pwd
-
-          echo "Arquivos na raiz do repositório:"
-          ls -l
-
+          echo "Gerando pasta build..."
           mkdir build
           cp index.html build/
           cp style.css build/
 
-          echo "Arquivos na pasta build:"
+          echo "Conteúdo da pasta build:"
           ls -l build/
 
       - name: Publicar artefatos
@@ -48,6 +43,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: site-build
+          path: site-build
 
       - name: Deploy para GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -55,5 +51,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: site-build
           publish_branch: gh-pages
+
 
 
