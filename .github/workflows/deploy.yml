@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - master
-  pull_request: {}
+  pull_request:
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -18,13 +19,16 @@ jobs:
 
       - name: Gerar artefato do site
         run: |
-          echo "Diretório atual no runner:"
+          echo "Diretório atual (runner):"
           pwd
+
           echo "Arquivos na raiz do repositório:"
           ls -l
-          mkdir -p build
+
+          mkdir build
           cp index.html build/
           cp style.css build/
+
           echo "Arquivos na pasta build:"
           ls -l build/
 
@@ -38,8 +42,9 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
+
     steps:
-      - name: Baixar artefato
+      - name: Baixar artefato gerado
         uses: actions/download-artifact@v4
         with:
           name: site-build
@@ -48,6 +53,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build
+          publish_dir: site-build
           publish_branch: gh-pages
+
 
