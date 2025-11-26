@@ -10,11 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout do código (branch master)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Criar pasta build e copiar arquivos
+      - name: Preparar pasta build
         run: |
+          rm -rf build       # <-- remove build se existir
           mkdir build
           cp index.html build/
           cp style.css build/
@@ -25,6 +28,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
           publish_branch: gh-pages
+          force_orphan: true   # limpa a branch gh-pages e impede lixo de builds antigos
 
 
 
