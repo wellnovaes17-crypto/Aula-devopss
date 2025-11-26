@@ -1,0 +1,33 @@
+name: Pipeline de CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Validar HTML (simples)
+        run: |
+          echo "Validando HTML..."
+          grep -q "<html" site/index.html
+
+      - name: Criar artefato do site
+        run: |
+          rm -rf build
+          mkdir build
+          cp site/index.html build/
+          cp site/style.css build/
+
+      - name: Publicar artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-build
+          path: build
