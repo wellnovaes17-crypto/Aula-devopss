@@ -3,7 +3,7 @@ name: Pipeline de CI
 on:
   push:
     branches:
-      - master
+      - '**'
   pull_request:
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Validar HTML (simples)
+      - name: Validar HTML
         run: |
           echo "Validando HTML..."
           grep -q "<html" site/index.html
