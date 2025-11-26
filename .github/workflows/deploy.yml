@@ -1,55 +1,29 @@
-name: CI/CD Pipeline
+name: Deploy para GitHub Pages
 
 on:
   push:
     branches:
       - master
-  pull_request:
 
 jobs:
-  ci:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Validação simples do HTML
-        run: echo "Rodando validação (simulação)"
-
-      - name: Gerar artefato do site
+      - name: Criar pasta build e copiar arquivos
         run: |
-          echo "Gerando pasta build..."
           mkdir build
           cp index.html build/
           cp style.css build/
-
-          echo "Conteúdo da pasta build:"
-          ls -l build/
-
-      - name: Publicar artefatos
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-build
-          path: build/
-
-  deploy:
-    needs: ci
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-
-    steps:
-      - name: Baixar artefato gerado
-        uses: actions/download-artifact@v4
-        with:
-          name: site-build
-          path: site-build
 
       - name: Deploy para GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: site-build
+          publish_dir: build
           publish_branch: gh-pages
 
 
